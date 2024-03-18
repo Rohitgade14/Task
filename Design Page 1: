@@ -1,0 +1,39 @@
+// src/components/Form.js
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const Form = () => {
+    const [formData, setFormData] = useState({
+        username: '',
+        code_language: '',
+        stdin: '',
+        source_code: ''
+    });
+
+    const handleChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        try {
+            await axios.post('/submit', formData);
+            // Optionally, show a success message or redirect
+        } catch (error) {
+            console.error(error);
+            // Handle error
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="username" placeholder="Username" onChange={handleChange} required />
+            <input type="text" name="code_language" placeholder="Code Language" onChange={handleChange} required />
+            <textarea name="stdin" placeholder="Standard Input" onChange={handleChange}></textarea>
+            <textarea name="source_code" placeholder="Source Code" onChange={handleChange} required></textarea>
+            <button type="submit">Submit</button>
+        </form>
+    );
+};
+
+export default Form;
