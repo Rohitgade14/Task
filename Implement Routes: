@@ -1,0 +1,29 @@
+// routes/submissionRoutes.js
+const express = require('express');
+const router = express.Router();
+const Submission = require('../models/submission');
+
+// Submit a code snippet
+router.post('/submit', async (req, res) => {
+    try {
+        const { username, code_language, stdin, source_code } = req.body;
+        const submission = await Submission.create({ username, code_language, stdin, source_code });
+        res.status(201).json(submission);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Get all submissions
+router.get('/submissions', async (req, res) => {
+    try {
+        const submissions = await Submission.findAll({ order: [['timestamp', 'DESC']] });
+        res.status(200).json(submissions);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+module.exports = router;
