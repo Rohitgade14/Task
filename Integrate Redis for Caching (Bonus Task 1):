@@ -1,0 +1,16 @@
+// Redis caching middleware
+const redis = require('redis');
+const client = redis.createClient();
+
+const cacheSubmissions = (req, res, next) => {
+    client.get('submissions', (err, data) => {
+        if (err) throw err;
+        if (data !== null) {
+            res.status(200).json(JSON.parse(data));
+        } else {
+            next();
+        }
+    });
+};
+
+module.exports = { cacheSubmissions };
