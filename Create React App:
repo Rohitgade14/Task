@@ -1,0 +1,3 @@
+npx create-react-app code-submission-frontend
+cd code-submission-frontend
+npm install axios
