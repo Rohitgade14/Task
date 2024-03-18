@@ -1,0 +1,11 @@
+CREATE DATABASE code_submission_db;
+USE code_submission_db;
+
+CREATE TABLE submissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    code_language VARCHAR(50) NOT NULL,
+    stdin TEXT,
+    source_code TEXT NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
