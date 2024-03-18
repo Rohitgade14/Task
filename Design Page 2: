@@ -1,0 +1,47 @@
+// src/components/Submissions.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const Submissions = () => {
+    const [submissions, setSubmissions] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get('/submissions');
+                setSubmissions(response.data);
+            } catch (error) {
+                console.error(error);
+                // Handle error
+            }
+        }
+        fetchData();
+    }, []);
+
+    return (
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Code Language</th>
+                    <th>Stdin</th>
+                    <th>Timestamp</th>
+                    <th>Source Code (Limited)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {submissions.map(submission => (
+                    <tr key={submission.id}>
+                        <td>{submission.username}</td>
+                        <td>{submission.code_language}</td>
+                        <td>{submission.stdin}</td>
+                        <td>{submission.timestamp}</td>
+                        <td>{submission.source_code.slice(0, 100)}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    );
+};
+
+export default Submissions;
