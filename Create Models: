@@ -1,0 +1,30 @@
+// models/submission.js
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize('mysql://user:password@localhost:3306/code_submission_db');
+
+const Submission = sequelize.define('Submission', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
+    username: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    code_language: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    stdin: DataTypes.TEXT,
+    source_code: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    timestamp: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.NOW
+    }
+});
+
+module.exports = Submission;
